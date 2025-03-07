@@ -180,34 +180,6 @@ namespace DevIO.Api.Controllers
             return CustomResponse(funcionarioViewModel);
         }
 
-        //[HttpDelete("recorrentes/{id:guid}")]
-        //public async Task<ActionResult> ExcluirRecorrentes(Guid id)
-        //{
-        //    var transacaoViewModel = await _transacaoService.ObterPorId(id);
-
-        //    if (transacaoViewModel == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (transacaoViewModel.Recorrente)
-        //    {
-        //        var transacoesRecorrentes = await _transacaoService.ObterTransacoesRecorrentes(id);
-        //        foreach (var transacao in transacoesRecorrentes)
-        //        {
-        //            await _transacaoService.Remover(transacao.Id);
-        //        }
-        //        await _transacaoService.Remover(id);
-
-        //        return Ok("Todas as parcelas da transação foram removidas com sucesso!");
-        //    }
-        //    else
-        //    {
-        //        await _transacaoService.Remover(id);
-        //        return Ok("Transação removida com sucesso!");
-        //    }
-        //}
-
         [HttpDelete("recorrentes/{id:guid}")]
         public async Task<ActionResult> ExcluirRecorrentes(Guid id)
         {
