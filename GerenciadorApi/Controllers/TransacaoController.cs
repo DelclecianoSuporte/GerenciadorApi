@@ -37,59 +37,6 @@ namespace DevIO.Api.Controllers
             return CustomResponse(transacao);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AdicionarTransacao([FromBody] TransacaoViewModel transacaoViewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var transacoes = new List<Transacao>();
-
-        //    if (transacaoViewModel.Recorrente && transacaoViewModel.QuantidadeParcelas.HasValue)
-        //    {
-        //        for (int i = 0; i < transacaoViewModel.QuantidadeParcelas.Value; i++)
-        //        {
-        //            transacoes.Add(new Transacao
-        //            {
-        //                Id = Guid.NewGuid(),
-        //                Tipo = transacaoViewModel.Tipo,
-        //                Valor = transacaoViewModel.Valor,
-        //                Data = transacaoViewModel.Data.AddMonths(i),
-        //                Descricao = $"{transacaoViewModel.Descricao} - Parcela {i + 1}",
-        //                Recorrente = transacaoViewModel.Recorrente,
-        //                QuantidadeParcelas = transacaoViewModel.QuantidadeParcelas,
-        //                Status_Transacao = transacaoViewModel.Status_Transacao,
-        //                FormaPagamento = transacaoViewModel.FormaPagamento,
-        //                Categoria = transacaoViewModel.Categoria
-        //            });
-        //        }
-
-        //        await _transacaoService.AdicionarVarias(transacoes);
-        //    }
-        //    else
-        //    {
-        //        var transacao = new Transacao
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Tipo = transacaoViewModel.Tipo,
-        //            Valor = transacaoViewModel.Valor,
-        //            Data = transacaoViewModel.Data,
-        //            Descricao = transacaoViewModel.Descricao,
-        //            Recorrente = transacaoViewModel.Recorrente,
-        //            QuantidadeParcelas = transacaoViewModel.QuantidadeParcelas,
-        //            Status_Transacao = transacaoViewModel.Status_Transacao,
-        //            FormaPagamento = transacaoViewModel.FormaPagamento,
-        //            Categoria = transacaoViewModel.Categoria
-        //        };
-
-        //        await _transacaoService.Adicionar(transacao);
-        //    }
-
-        //    return CreatedAtAction(nameof(MostrarTransacaoPorId), new { id = transacoes.First().Id }, transacoes);
-        //}
-
         [HttpPost]
         public async Task<IActionResult> AdicionarTransacao([FromBody] TransacaoViewModel transacaoViewModel)
         {
