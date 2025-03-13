@@ -110,8 +110,6 @@ namespace DevIO.Api.Controllers
             return CustomResponse(transacaoViewModel);
         }
 
-
-
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<TransacaoViewModel>> Excluir(Guid id)
         {
@@ -154,7 +152,6 @@ namespace DevIO.Api.Controllers
                 return NoContent(); 
             }
         }
-
 
     }
 }
