@@ -37,6 +37,7 @@ namespace DevIO.Api.Controllers
             return CustomResponse(transacao);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> AdicionarTransacao([FromBody] TransacaoViewModel transacaoViewModel)
         {
@@ -49,13 +50,15 @@ namespace DevIO.Api.Controllers
 
             if (transacaoViewModel.Recorrente && transacaoViewModel.QuantidadeParcelas.HasValue)
             {
+                decimal valorParcela = transacaoViewModel.Valor / transacaoViewModel.QuantidadeParcelas.Value;
+
                 for (int i = 0; i < transacaoViewModel.QuantidadeParcelas.Value; i++)
                 {
                     transacoes.Add(new Transacao
                     {
                         Id = Guid.NewGuid(),
                         Tipo = transacaoViewModel.Tipo,
-                        Valor = transacaoViewModel.Valor,
+                        Valor = valorParcela, // Usando o valor da parcela
                         Data = transacaoViewModel.Data.AddMonths(i),
                         Descricao = $"{transacaoViewModel.Descricao} - Parcela {i + 1}",
                         Recorrente = transacaoViewModel.Recorrente,
