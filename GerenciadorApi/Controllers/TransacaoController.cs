@@ -37,7 +37,6 @@ namespace DevIO.Api.Controllers
             return CustomResponse(transacao);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AdicionarTransacao([FromBody] TransacaoViewModel transacaoViewModel)
         {
@@ -58,7 +57,7 @@ namespace DevIO.Api.Controllers
                     {
                         Id = Guid.NewGuid(),
                         Tipo = transacaoViewModel.Tipo,
-                        Valor = valorParcela, // Usando o valor da parcela
+                        Valor = valorParcela,
                         Data = transacaoViewModel.Data.AddMonths(i),
                         Descricao = $"{transacaoViewModel.Descricao} - Parcela {i + 1}",
                         Recorrente = transacaoViewModel.Recorrente,
@@ -93,7 +92,6 @@ namespace DevIO.Api.Controllers
 
             return CreatedAtAction(nameof(MostrarTransacaoPorId), new { id = transacoes.First().Id }, transacoes);
         }
-
 
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<TransacaoViewModel>> Atualizar(Guid id, [FromBody] TransacaoViewModel transacaoViewModel)

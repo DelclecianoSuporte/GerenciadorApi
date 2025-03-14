@@ -7,8 +7,6 @@
         Investimento,
         RendaExtra,
         Bonificação,
-
-
         Saúde,
         Assinatura,
         Transporte,
@@ -18,6 +16,5 @@
         Casa,
         Compras, 
         Viagem
-
     }
 }
