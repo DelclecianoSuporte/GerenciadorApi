@@ -1,4 +1,4 @@
-ï»¿using Xunit;
+using Xunit;
 using Moq;
 using DevIO.Api.Controllers;
 using DevIO.Business.Interfaces;
@@ -81,11 +81,11 @@ namespace DevIO.Tests
         public async Task DeveRetornarNotFoundQuandoTransacaoNaoExistir()
         {
             var transacaoId = Guid.NewGuid();
-            
+
             _mockTransacaoService.Setup(service => service.ObterPorId(transacaoId)).ReturnsAsync((Transacao)null);
-            
+
             var resultado = await _controller.MostrarTransacaoPorId(transacaoId);
-            
+
             Assert.IsType<NotFoundObjectResult>(resultado.Result);
         }
 
@@ -97,7 +97,7 @@ namespace DevIO.Tests
                 Tipo = "Receita",
                 Valor = 100,
                 Data = DateTime.Now,
-                Descricao = "Pagamento de salÃ¡rio",
+                Descricao = "Pagamento de salário",
                 Recorrente = true,
                 QuantidadeParcelas = 3, // 3 parcelas
                 Status_Transacao = StatusTransacao.Pago,
@@ -116,7 +116,7 @@ namespace DevIO.Tests
             _mockTransacaoService.Verify(service => service.AdicionarVarias(It.IsAny<List<Transacao>>()), Times.Once);
 
             Assert.Equal(201, actionResult.StatusCode);
-            Assert.Equal(3, resultadoTransacao.Count); // 3 transaÃ§Ãµes baseado na quantidade de parcelas
+            Assert.Equal(3, resultadoTransacao.Count); // 3 transações baseado na quantidade de parcelas
         }
 
         [Fact]
@@ -127,15 +127,15 @@ namespace DevIO.Tests
                 Tipo = "Credito",
                 Valor = 100,
                 Data = DateTime.Now,
-                Descricao = "Pagamento de salÃ¡rio",
-                Recorrente = false, // NÃ£o recorrente
-                QuantidadeParcelas = null, // NÃ£o hÃ¡ parcelas
+                Descricao = "Pagamento de salário",
+                Recorrente = false, // Não recorrente
+                QuantidadeParcelas = null, // Não há parcelas
                 Status_Transacao = StatusTransacao.Pago,
                 FormaPagamento = FormaPagamento.Dinheiro,
                 Categoria = CategoriaTransacao.Compras
             };
 
-            // Configurar o mock para simular a adiÃ§Ã£o de uma transaÃ§Ã£o Ãºnica
+            // Configurar o mock para simular a adição de uma transação única
             _mockTransacaoService.Setup(service => service.Adicionar(It.IsAny<Transacao>()))
                 .Returns(Task.CompletedTask);
 
@@ -148,7 +148,7 @@ namespace DevIO.Tests
 
             Assert.Equal(201, actionResult.StatusCode);
 
-            Assert.NotNull(resultadoTransacao); 
+            Assert.NotNull(resultadoTransacao);
             Assert.Equal(transacaoViewModel.Valor, resultadoTransacao.Valor);
         }
 
@@ -157,9 +157,9 @@ namespace DevIO.Tests
         {
             var id = Guid.NewGuid();
 
-            var transacaoViewModel = new TransacaoViewModel {Id = id };
+            var transacaoViewModel = new TransacaoViewModel { Id = id };
 
-            var transacao = new Transacao {   Id = id };
+            var transacao = new Transacao { Id = id };
 
             _mockMapper.Setup(m => m.Map<Transacao>(It.IsAny<TransacaoViewModel>()))
                 .Returns(transacao);
@@ -185,12 +185,12 @@ namespace DevIO.Tests
         public async Task DeveRetornarSucessoQuandoForRemovidaUmaTransacaoSemRecorrencia()
         {
             var id = Guid.NewGuid();
-            var transacao = new Transacao {Id = id };
+            var transacao = new Transacao { Id = id };
 
             var transacaoViewModel = new TransacaoViewModel { Id = id };
 
             _mockTransacaoService.Setup(s => s.ObterPorId(id))
-                .ReturnsAsync(transacao); 
+                .ReturnsAsync(transacao);
 
             _mockTransacaoService.Setup(s => s.Remover(id))
                 .Returns(Task.CompletedTask);
@@ -216,7 +216,7 @@ namespace DevIO.Tests
         public async Task DeveRetornarSucessoQuandoForRemovidoTransacoesRecorrentes()
         {
             var id = Guid.NewGuid();
-            var transacao = new Transacao  
+            var transacao = new Transacao
             {
                 Id = id,
                 Recorrente = true
@@ -230,19 +230,19 @@ namespace DevIO.Tests
             }
 
             _mockTransacaoService.Setup(s => s.ObterPorId(id))
-                .ReturnsAsync(transacao); 
+                .ReturnsAsync(transacao);
 
             _mockTransacaoService.Setup(s => s.ObterTransacoesRecorrentes(id))
-                .ReturnsAsync(transacoesRecorrentes); 
+                .ReturnsAsync(transacoesRecorrentes);
 
-            _mockTransacaoService.Setup(s => s.Remover(It.IsAny<Guid>())) 
+            _mockTransacaoService.Setup(s => s.Remover(It.IsAny<Guid>()))
                 .Returns(Task.CompletedTask);
 
             var resultado = await _controller.ExcluirRecorrentes(id);
 
-            Assert.IsType<NoContentResult>(resultado); 
+            Assert.IsType<NoContentResult>(resultado);
 
-            _mockTransacaoService.Verify(s => s.Remover(It.IsAny<Guid>()), Times.Exactly(transacoesRecorrentes.Count + 1)); 
+            _mockTransacaoService.Verify(s => s.Remover(It.IsAny<Guid>()), Times.Exactly(transacoesRecorrentes.Count + 1));
         }
 
     }
